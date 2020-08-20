@@ -1,21 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Hello = () => {
+const Hello = (props) => {
   return (
     <div>
-      <p>Hello world</p>
+      <p>
+        Hello {props.name}, you are {props.age} old.
+      </p>
     </div>
   )
 }
 
 const App = () => {
+const nimi = "Pekka"
+const ika = "18"
+
   return (
-    <div>
+    <>
       <h1>Greetings</h1>
-      <Hello />
-      <Hello />
-    </div>
+      <Hello name="Janne" age={16 + 20} />
+      <Hello name={nimi} age={ika} />
+    </>
   )
 }
 
