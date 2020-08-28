@@ -10,13 +10,23 @@ const Header = (props) => {
 }
 
 const Content = (props) => {
-  return props.parts.map((value) =>
-    <Part part={value} />
+  return (
+    <div>
+      <Part parts={props.parts} part={0} />
+      <Part parts={props.parts} part={1} />
+      <Part parts={props.parts} part={2} />
+    </div>
   )
 }
 
 const Part = (props) => {
-  return (<p>{props.part['name'] + ' ' + props.part['exercises']}</p>)
+  return (
+    <div>
+      <p>
+        {props.parts[props.part]['name']} {props.parts[props.part]['exercises']}
+      </p>
+    </div>
+  )
 }
 
 const Total = (props) => {
@@ -26,7 +36,6 @@ const Total = (props) => {
     </div>
   )
 }
-
 
 const App = () => {
   const course = 'Half Stack Application development'
