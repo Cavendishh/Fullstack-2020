@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-
 //Button creating component
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 //Statistics creating component
 const Statistics = ({ good, neutral, bad, amount, average }) =>{
+
   //If feedback has NOT been given - show this 
   if (amount === 0) {
     return (
@@ -19,23 +19,29 @@ const Statistics = ({ good, neutral, bad, amount, average }) =>{
   //Else if feedback has been given - feedback is shown
   return (
     <div>
-      <p>Statistics</p>
-        <StatisticLine text="Good" value={good} />
-        <StatisticLine text="Neutral" value={neutral} />
-        <StatisticLine text="Bad" value={bad} />
-        <StatisticLine text="Amount" value={amount} />
-        <StatisticLine text="Average" value={average / amount} />
-        <StatisticLine text="Positive feedback" value={good / amount * 100 + ' %'} />
+      <table>
+        <tbody>
+          <tr>
+            <td>Statistics</td>
+          </tr>
+          <StatisticLine text="Good" value={good} />
+          <StatisticLine text="Neutral" value={neutral} />
+          <StatisticLine text="Bad" value={bad} />
+          <StatisticLine text="Amount" value={amount} />
+          <StatisticLine text="Average" value={average / amount} />
+          <StatisticLine text="Positive" value={good / amount * 100 + ' %'} />
+        </tbody>
+      </table>
     </div>
   )
 }
 
-//Creates statistic lines with text and value attributes
+//Adds the statisticline to the table
 const StatisticLine = ({ text, value }) => {
   return (
-    <div>
-      {text} {value}
-    </div>
+    <tr>
+      <td>{text}</td><td>{value}</td>
+    </tr>
   )
 }
 
