@@ -7,7 +7,7 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 //Statistics creating component
 const Statistics = ({ good, neutral, bad, amount, average }) =>{
-  //If feedback has NOT been given, show this 
+  //If feedback has NOT been given - show this 
   if (amount === 0) {
     return (
       <div>
@@ -16,18 +16,25 @@ const Statistics = ({ good, neutral, bad, amount, average }) =>{
     )
   }
 
-  //If feedback has been given, feedback is shown
+  //Else if feedback has been given - feedback is shown
   return (
     <div>
       <p>Statistics</p>
-      <p>
-        Good {good}<br />
-        Neutral {neutral}<br />
-        Bad {bad}<br />
-        Feedback amount {amount}<br />
-        Average {average / amount}<br />
-        Positive feedback {good / amount * 100 + ' %'}
-      </p>
+        <StatisticLine text="Good" value={good} />
+        <StatisticLine text="Neutral" value={neutral} />
+        <StatisticLine text="Bad" value={bad} />
+        <StatisticLine text="Amount" value={amount} />
+        <StatisticLine text="Average" value={average / amount} />
+        <StatisticLine text="Positive feedback" value={good / amount * 100 + ' %'} />
+    </div>
+  )
+}
+
+//Creates statistic lines with text and value attributes
+const StatisticLine = ({ text, value }) => {
+  return (
+    <div>
+      {text} {value}
     </div>
   )
 }
