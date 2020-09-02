@@ -20,15 +20,21 @@ const Header = ({ course }) => {
 }
 
 const Content = ({ course }) => {
+  console.log(course.parts.length)
+  const copy = []
+  console.log('Debuggaus', copy)
+  let i = 0
+
   course.parts.forEach (value => {
-    console.log('hey')
+    copy.push(<Part parts={course.parts} part={i} />)
+    i++;
   })
+
+  console.log('Debuggaus concat jälkeen: ', copy)
 
     return (
       <div>
-        <Part parts={course.parts} part={0} />
-        <Part parts={course.parts} part={1} />
-        <Part parts={course.parts} part={2} />
+        {copy}
       </div>
     )
 }
@@ -48,11 +54,11 @@ const Total = ({ course }) => {
   let total = 0
   let i = 0
   
-  course.parts.forEach (exercises => {
+  course.parts.forEach (() => {
     total += course.parts[i].exercises
     i++;
   })
-  
+
   return(
     <div>
       <p>Number of exercises {total}</p>
