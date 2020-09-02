@@ -20,32 +20,13 @@ const Header = ({ course }) => {
 }
 
 const Content = ({ course }) => {
-  console.log(course.parts.length)
-  const copy = []
-  console.log('Debuggaus', copy)
-  let i = 0
-
-  course.parts.forEach (value => {
-    copy.push(<Part parts={course.parts} part={i} />)
-    i++;
-  })
-
-  console.log('Debuggaus concat jälkeen: ', copy)
-
-    return (
-      <div>
-        {copy}
-      </div>
-    )
-}
-
-const Part = ({ parts, part  }) => {
-  
   return (
     <div>
-      <p>
-        {parts[part]['name']} {parts[part]['exercises']}
-      </p>
+      <ul>
+        {course.parts.map(part =>
+        <li key={part.id}>{part.name} {part.exercises}</li>
+          )}
+      </ul>
     </div>
   )
 }
@@ -72,15 +53,18 @@ const App = () => {
     parts: [
     {
       name: 'Fundamentals of React',
-      exercises: 10
+      exercises: 10,
+      id: 1
     },
     {
       name: 'Using props to pass data',
-      exercises: 7
+      exercises: 7,
+      id: 2
     },
     {
       name: 'State of a component',
-      exercises: 14
+      exercises: 14,
+      id: 3
     }
   ]
   }
