@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import SearchPerson from './components/SearchPerson'
+import NewPerson from './components/NewPerson'
+import RenderPerson from './components/RenderPerson'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -23,18 +26,13 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
 
-  const handleNoteChange = (event) => {
-    setNewName(event.target.value)
-  }
+  const handleNoteChange = (event) => setNewName(event.target.value)
 
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+  const handleNumberChange = (event) => setNewNumber(event.target.value)
 
-  const handleFilterChange = (event) => {
-    console.log(event.target.value)
-    setShowPerson(event.target.value)
-  }
+  const handleFilterChange = (event) => setShowPerson(event.target.value)
+  
+  const personsFiltered = persons.filter((person) => person.name.toLowerCase().includes(showPerson.toLowerCase()))
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -55,41 +53,24 @@ const App = () => {
     }    
   }
 
-  const personsFiltered = persons.filter((person) =>
-    person.name.toLowerCase().includes(showPerson.toLowerCase()))
-
-  console.log(personsFiltered)
-
   return (
     <div>
-      <div>
-        <h2>Phonebook</h2>
-        Filter shown with <input 
-          value={showPerson}
-          onChange={handleFilterChange} />
-      </div>
+      <h2>Phonebook</h2>
+      <SearchPerson
+        showPerson={showPerson}
+        handleFilterChange={handleFilterChange}
+      />
       <h2>Add a new person</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          Name: <input 
-            value={newName}
-            onChange={handleNoteChange} />
-        </div>
-        <div>
-          Number: <input
-            value={newNumber}
-            onChange={handleNumberChange}
-            />
-        </div>
-        <div>
-          <button type='submit'>Add</button>
-        </div>
-      </form>
+      <NewPerson
+        addPerson={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        handleNoteChange={handleNoteChange}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <div>
-        {persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>)}
-      </div>
+        <RenderPerson personsFiltered={personsFiltered}
+      />
     </div>
   )
 }
