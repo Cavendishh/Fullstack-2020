@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import SearchPerson from './components/SearchPerson'
 import NewPerson from './components/NewPerson'
 import RenderPerson from './components/RenderPerson'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,29 +10,23 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
 
+  const handleNoteChange = (event) => setNewName(event.target.value)
+  const handleNumberChange = (event) => setNewNumber(event.target.value)
+  const handleFilterChange = (event) => setShowPerson(event.target.value)
+  const personsFiltered = persons.filter((person) => person.name.toLowerCase().includes(showPerson.toLowerCase()))
+
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         setPersons(response.data)
       })
   }, [])
-  
-
-
-
-  const handleNoteChange = (event) => setNewName(event.target.value)
-
-  const handleNumberChange = (event) => setNewNumber(event.target.value)
-
-  const handleFilterChange = (event) => setShowPerson(event.target.value)
-  
-  const personsFiltered = persons.filter((person) => person.name.toLowerCase().includes(showPerson.toLowerCase()))
 
   const addPerson = (event) => {
     event.preventDefault()
 
-    const noteObject = {
+    const personObject = {
       name: newName,
       number: newNumber
     }
@@ -42,10 +36,14 @@ const App = () => {
       setNewName('')
       setNewNumber('')
     } else {
-      setPersons(persons.concat(noteObject))
-      setNewName('')
-      setNewNumber('')
-    }    
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+    }
   }
 
   return (
