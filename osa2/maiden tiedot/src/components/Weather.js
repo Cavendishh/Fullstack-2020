@@ -3,8 +3,7 @@ import axios from 'axios'
 
 const Weather = ({ capital }) => {
   const [weather, setWeather] = useState('')
-  
-  const api_key = '71e27d29ef5f1d2e0e310ac615b94378'
+  const api_key = process.env.REACT_APP_API_KEY
 
   useEffect(() => {
     axios
@@ -13,10 +12,6 @@ const Weather = ({ capital }) => {
         setWeather(response.data.current)
       })
   }, [])
-
-
- console.log(capital)
-  console.log(weather)
 
   return (
     <div>

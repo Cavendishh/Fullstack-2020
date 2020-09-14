@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import RenderCountries from './components/RenderCountries'
 
-
 const App = () => {
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
@@ -15,14 +14,8 @@ const App = () => {
       })
   }, [])
 
-  const handleCountryChange = (event) => {
-    setSearch(event.target.value)
-  }
-
-  const handleButtonClick = (event) => {
-    setSearch(event.target.attributes.country.value)
-  }
-
+  const handleCountryChange = (event) => setSearch(event.target.value)
+  const handleButtonClick = (event) => setSearch(event.target.attributes.country.value)
   const countriesFiltered = countries.filter((country) => country.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
@@ -32,7 +25,7 @@ const App = () => {
           input={search}
           onChange={handleCountryChange} />
       </form>
-    <RenderCountries countriesFiltered={countriesFiltered} onClick={handleButtonClick}/>
+      <RenderCountries countriesFiltered={countriesFiltered} onClick={handleButtonClick}/>
     </div>
   )
 }
