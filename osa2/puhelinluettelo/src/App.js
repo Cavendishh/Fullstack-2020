@@ -6,7 +6,7 @@ import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('')
+  const [newName, setNewName] = useState('test')
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
 
@@ -23,6 +23,15 @@ const App = () => {
       })
   }, [])
 
+  const handleRemovePerson = (name, id) => {
+    if (window.confirm('Do you really want to delete this person?')) {
+      personService
+      .remove(id)
+      .then(() => {
+        setPersons(persons.filter(n => n.id !== id));
+      })}
+    }    
+
   const addPerson = (event) => {
     event.preventDefault()
 
@@ -32,7 +41,13 @@ const App = () => {
     }
 
     if (persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())) {
-      window.alert(newName + ' is already added to phonebook')
+      if (window.confirm(newName + ' is already added to phonebook, replace the old number with a new one?')) {        
+        const personFound = persons.find((person) => person.name === newName)
+        
+        personService
+          .update(personFound.id, { ...personFound, number: newNumber })
+          .then(response => setPersons(persons.map(person => (person.name === newName ? response : person))))
+      }
       setNewName('')
       setNewNumber('')
     } else {
@@ -62,7 +77,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-        <RenderPerson personsFiltered={personsFiltered}
+        <RenderPerson personsFiltered={personsFiltered} handleRemovePerson={handleRemovePerson}
       />
     </div>
   )

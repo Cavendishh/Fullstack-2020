@@ -5,6 +5,9 @@ const RenderPerson = (props) => {
     props.personsFiltered.map((person) =>
       <p key={person.name}>
         {person.name} {person.number}
+        <button onClick={() => props.handleRemovePerson(person.name, person.id)}>
+          Remove
+        </button>
       </p>)
   )
 }
