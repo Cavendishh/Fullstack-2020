@@ -3,6 +3,20 @@ import ReactDOM from 'react-dom';
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
+const GenerateMostVoted = ({ votes, anecdotes }) => {
+  const maxVote = Math.max(...votes)
+  let maxIndex = votes.indexOf(maxVote)
+
+  if (maxVote === 0) {
+    return (
+      <p>No anecdotes has been voted yet.</p>
+    )
+  }
+  return (
+    <p>"{anecdotes[maxIndex]}" has {votes[maxIndex]} votes.</p>
+  )
+}
+
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(5).fill(0))
@@ -13,20 +27,6 @@ const App = ({ anecdotes }) => {
     const copyVotes = [...votes]
     copyVotes[selected] += 1
     setVotes(copyVotes)
-  }
-
-  const GenerateMostVoted = ({ votes, anecdotes }) => {
-    const maxVote = Math.max(...votes)
-    let maxIndex = votes.indexOf(maxVote)
-
-    if (maxVote === 0) {
-      return (
-        <p>No anecdotes has been voted yet.</p>
-      )
-    }
-    return (
-      <p>"{anecdotes[maxIndex]}" has {votes[maxIndex]} votes.</p>
-    )
   }
   
   return (
