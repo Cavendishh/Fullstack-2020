@@ -5,7 +5,10 @@ const port = process.env.PORT || 3001
 
 app.use(express.json())
 
-app.use(morgan('tiny'))
+//app.use(morgan('tiny'))
+//morgan.token('type', function (req, res) { return req.headers['content-type'] })
+morgan.token('object', function (req, res) { return console.log(req.body) })
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :object'))
 
 let persons = [
     {
