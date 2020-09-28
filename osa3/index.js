@@ -1,8 +1,11 @@
+require('dotenv').config()
+const port = process.env.PORT
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
-const port = process.env.PORT || 3001
+const mongoose = require('mongoose')
+const Person = require('./models/person')
 
 app.use(cors())
 app.use(express.json())
@@ -50,7 +53,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/persons', (req, res) => {
-  res.json(persons)
+  Person.find({})
+    .then(persons => {
+      res.json(persons)
+    })
 })
 
 app.get('/info', (req, res) => {

@@ -6,6 +6,8 @@ if (process.argv.length < 3) {
 }
 
 const password = process.argv[2]
+const name = process.argv[3]
+const number = process.argv[4]
 
 const url =
   `mongodb+srv://Cavendishh:${password}@cluster0.3hyk9.mongodb.net/person-app?retryWrites=true&w=majority`
@@ -20,20 +22,27 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-Person.find({}).then(result => {
-    result.forEach(person => {
-        console.log(person)
-    })
-    mongoose.connection.close()
-})
-
-/*const person = new Person({
+const person = new Person({
   id: (Math.round(Math.random() * 9999 + 1)),
-  name: 'Mongo Test',
-  number: '404',
+  name: name,
+  number: number || "",
 })
 
-person.save().then(response => {
-  console.log('Person saved!')
-  mongoose.connection.close()
-})*/
+if (name === undefined) {
+  Person
+    .find({})
+    .then(result => {
+      console.log('phonebook:')
+      result.forEach(person => {
+          console.log(person.name + ' ' + person.number)
+      })
+      mongoose.connection.close()
+  })
+} else {
+  person
+    .save()
+    .then(response => {
+      console.log(`added ${response.name} ${response.number} to phonebook`)
+      mongoose.connection.close()
+  })
+}
