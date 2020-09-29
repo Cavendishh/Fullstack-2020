@@ -90,15 +90,19 @@ const App = () => {
         .create(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
+          setErrorMessage(`Added ${newName}`)
+          setMessageStatus('success')
+          setNewName('')
+          setNewNumber('')  
         })
-      setErrorMessage(`Added ${newName}`)
-      setMessageStatus('success')
+        .catch(error => {
+          setErrorMessage(error.response.data.error)
+          setMessageStatus('error')
+        })
       setTimeout(() => {
         setErrorMessage(null)
         setMessageStatus(null)
       }, 3000)
-      setNewName('')
-      setNewNumber('')  
     }
   }
 
