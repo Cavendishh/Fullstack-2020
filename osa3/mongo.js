@@ -25,7 +25,7 @@ const Person = mongoose.model('Person', personSchema)
 const person = new Person({
   id: (Math.round(Math.random() * 9999 + 1)),
   name: name,
-  number: number || "",
+  number: number || '',
 })
 
 if (name === undefined) {
@@ -34,15 +34,15 @@ if (name === undefined) {
     .then(result => {
       console.log('phonebook:')
       result.forEach(person => {
-          console.log(person.name + ' ' + person.number)
+        console.log(person.name + ' ' + person.number)
       })
       mongoose.connection.close()
-  })
+    })
 } else {
   person
     .save()
     .then(response => {
       console.log(`added ${response.name} ${response.number} to phonebook`)
       mongoose.connection.close()
-  })
+    })
 }

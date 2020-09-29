@@ -11,10 +11,10 @@ app.use(express.json())
 app.use(express.static('build'))
 
 morgan.token('object', function (req, res) {
-  if (req.method === "POST") {
+  if (req.method === 'POST') {
     return JSON.stringify(req.body)
   } else {
-    return null;
+    return null
   }
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :object'))
@@ -33,7 +33,7 @@ app.get('/info', (req, res) => {
     })
 })
 
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
   Person.findById(req.params.id)
     .then(person => {
       if (person) {
@@ -45,7 +45,7 @@ app.get('/api/persons/:id', (req, res) => {
     .catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (req, res) => {
+app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
     .then(() => {
       res.status(204).end()
@@ -55,16 +55,16 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.post('/api/persons', (req, res, next) => {
   const body = req.body
-  
+
   if (!(body.name )) {
     return res.status(400).json({
-      error: `Person's name is missing`
+      error: 'Person\'s name is missing'
     })
   } else if (!(body.number)) {
     return res.status(400).json({
-      error: `Person's number is missing`
+      error: 'Person\'s number is missing'
     })
-  }    
+  }
 
   const person = new Person ({
     name: body.name,
@@ -96,7 +96,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 const unknownEndpoint = (req, res) => {
   res.status(404).send({
-    error: "unknown endpoint"
+    error: 'unknown endpoint'
   })
 }
 
